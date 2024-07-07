@@ -24,7 +24,7 @@ projeto_pipeline/
 
 1. **Clonar o Repositório**:
    ```bash
-   git clone <URL_DO_REPOSITORIO>
+   git clone https://github.com/aremartins/data-engineering-project.git
    cd projeto_pipeline/infra/terraform
   
 
