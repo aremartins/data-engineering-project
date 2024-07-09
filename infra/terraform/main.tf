@@ -74,3 +74,21 @@ resource "aws_iam_role_policy_attachment" "glue_role_attachment" {
   role       = aws_iam_role.glue_role.name
   policy_arn = aws_iam_policy.glue_policy.arn
 }
+
+resource "aws_glue_crawler" "transactions_crawler" {
+  name         = "transactions-crawler"
+  database_name = "customer_data"
+  role         = aws_iam_role.glue_role.arn
+
+  s3_target {
+    path = "s3://mybucket3s2/dados/originais/dados_empresas.csv"
+  }
+
+  schedule = "cron(0 12 * * ? *)"  # Exemplo de agendamento diário
+
+  classifiers = []
+  schema_change_policy {
+    delete_behavior = "LOG"
+    update_behavior = "UPDATE_IN_DATABASE"
+  }
+}
