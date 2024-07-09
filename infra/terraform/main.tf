@@ -52,6 +52,8 @@ resource "aws_iam_policy" "glue_policy" {
           "logs:PutLogEvents"
         ]
         Resource = [
+          "arn:aws:s3:::mybucket3s2",
+          "arn:aws:s3:::mybucket3s2/*",
           "arn:aws:s3:::${var.bucket_name_transactions}",
           "arn:aws:s3:::${var.bucket_name_transactions}/*",
           "arn:aws:s3:::${var.bucket_name_customers}",
