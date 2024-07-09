@@ -38,7 +38,7 @@ resource "aws_iam_role" "glue_role" {
 resource "aws_iam_policy" "glue_policy" {
   name        = "AWSGlueServicePolicy"
   description = "Policy for Glue Service Role"
-  
+
   policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
@@ -46,7 +46,10 @@ resource "aws_iam_policy" "glue_policy" {
         Effect = "Allow"
         Action = [
           "s3:GetObject",
-          "s3:ListBucket"
+          "s3:ListBucket",
+          "logs:CreateLogGroup",
+          "logs:CreateLogStream",
+          "logs:PutLogEvents"
         ]
         Resource = [
           "arn:aws:s3:::${var.bucket_name_transactions}",
@@ -56,7 +59,8 @@ resource "aws_iam_policy" "glue_policy" {
           "arn:aws:s3:::${var.bucket_name_logs}",
           "arn:aws:s3:::${var.bucket_name_logs}/*",
           "arn:aws:s3:::${var.bucket_name_athena_results}",
-          "arn:aws:s3:::${var.bucket_name_athena_results}/*"
+          "arn:aws:s3:::${var.bucket_name_athena_results}/*",
+          "arn:aws:logs:*:*:*"
         ]
       },
       {
@@ -84,7 +88,7 @@ resource "aws_glue_crawler" "transactions_crawler" {
     path = "s3://mybucket3s2/dados/originais/dados_empresas.csv"
   }
 
-  schedule = "cron(0 12 * * ? *)"  # Exemplo de agendamento diário
+  schedule = "cron(0 12 * * ? *)"
 
   classifiers = []
   schema_change_policy {
