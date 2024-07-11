@@ -60,6 +60,7 @@ resource "aws_iam_policy" "glue_policy" {
           "arn:aws:s3:::${var.bucket_name_logs}/*",
           "arn:aws:s3:::${var.bucket_name_athena_results}",
           "arn:aws:s3:::${var.bucket_name_athena_results}/*",
+          "arn:aws:s3:::mybucket3s2/scripts/processar_dados_empresas.py",
           "arn:aws:logs:*:*:*"
         ]
       },
