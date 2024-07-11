@@ -96,3 +96,26 @@ resource "aws_glue_crawler" "transactions_crawler" {
     update_behavior = "UPDATE_IN_DATABASE"
   }
 }
+
+resource "aws_glue_job" "processar_dados_empresas" {
+  name        = "processar_dados_empresas"
+  role_arn    = aws_iam_role.glue_role.arn
+  command {
+    script_location = "s3://mybucket3s2/scripts/processar_dados_empresas.py"
+    name            = "glueetl"
+    python_version  = "3"
+  }
+
+  default_arguments = {
+    "--job-language" = "python"
+    "--job-bookmark-option" = "job-bookmark-enable"
+    "--TempDir" = "s3://mybucket3s2/temp/"
+    "--enable-metrics" = "true"
+  }
+
+  max_retries           = 1
+  timeout               = 2880
+  glue_version          = "2.0"
+  number_of_workers     = 2
+  worker_type           = "G.1X"
+}
