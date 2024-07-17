@@ -47,6 +47,8 @@ resource "aws_iam_policy" "glue_policy" {
         Action = [
           "s3:GetObject",
           "s3:ListBucket",
+          "s3:PutObject", 
+          "s3:DeleteObject",         
           "logs:CreateLogGroup",
           "logs:CreateLogStream",
           "logs:PutLogEvents"
@@ -60,7 +62,8 @@ resource "aws_iam_policy" "glue_policy" {
           "arn:aws:s3:::${var.bucket_name_logs}/*",
           "arn:aws:s3:::${var.bucket_name_athena_results}",
           "arn:aws:s3:::${var.bucket_name_athena_results}/*",
-          "arn:aws:s3:::mybucket3s2/scripts/processar_dados_empresas.py",
+          "arn:aws:s3:::mybucket3s2",
+          "arn:aws:s3:::mybucket3s2/*",
           "arn:aws:logs:*:*:*"
         ]
       },
@@ -74,6 +77,7 @@ resource "aws_iam_policy" "glue_policy" {
     ]
   })
 }
+
 
 resource "aws_iam_role_policy_attachment" "glue_role_attachment" {
   role       = aws_iam_role.glue_role.name
