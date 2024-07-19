@@ -55,6 +55,10 @@ my-company-data-athena-results
 
  AWSGlueServiceRole com a policy AWSGlueServicePolicy anexada.
 
+### Scripts e Glue Jobs
+
+   O script processar_dados_empresas.py armazenado no bucket S3 mybucket3s2/scripts/.
+
 
 ## Verificação dos Recursos
 
